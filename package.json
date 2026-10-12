@@ -1,0 +1,59 @@
+{
+  "name": "anvil-notes",
+  "productName": "Anvil Notes",
+  "version": "1.0.0",
+  "description": "Turn recordings into summaries and tasks: transcribe MP3s with OpenWhispr, summarise with Claude, save to Notion or Markdown.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac --arm64"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@notionhq/client": "^5.27.0",
+    "@openwhispr/cli": "^0.3.0",
+    "openai": "^7.30.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "electron": "^44.6.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "uk.co.steamhammer.anvilnotes",
+    "productName": "Anvil Notes",
+    "mac": {
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity",
+      "extendInfo": {
+        "NSRemovableVolumesUsageDescription": "Anvil Notes looks for new recordings on voice recorders and USB drives you plug in."
+      },
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "identity": "-",
+      "hardenedRuntime": false
+    },
+    "asarUnpack": [
+      "node_modules/@openwhispr/**",
+      "node_modules/commander/**"
+    ],
+    "files": [
+      "src/**",
+      "renderer/**",
+      "package.json"
+    ],
+    "dmg": {
+      "title": "Anvil Notes"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}

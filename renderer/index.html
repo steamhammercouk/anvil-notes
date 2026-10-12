@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+  <title>Anvil Notes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1><img src="assets/icon.png" alt="" class="logo" />Anvil Notes</h1>
+    <nav>
+      <button class="tab active" data-view="main">Transcribe</button>
+      <button class="tab" data-view="settings">Settings</button>
+    </nav>
+  </header>
+
+  <main id="view-main" class="view">
+    <section id="recorder" class="recorder" hidden>
+      <div class="recorder-head">
+        <div>
+          <strong id="recorder-title"></strong>
+          <span id="recorder-sub" class="muted"></span>
+        </div>
+        <button id="recorder-toggle" type="button">Review</button>
+      </div>
+      <div id="recorder-body" hidden>
+        <label class="check select-all"><input type="checkbox" id="recorder-all" checked /><span>Select all</span></label>
+        <ul id="recorder-files" class="file-list"></ul>
+        <div class="row wrap">
+          <button id="recorder-add" class="primary" type="button">Add to queue</button>
+          <button id="recorder-done" type="button" title="Hide these recordings from now on without processing them">Mark as done</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="dropzone" tabindex="0" role="button" aria-label="Choose audio files">
+      <strong>Drop recordings here</strong>
+      <span>or click to choose · MP3, WAV, M4A, FLAC, OGG, WebM</span>
+    </div>
+
+    <section id="queue-section" hidden>
+      <div class="result-head">
+        <h2 id="queue-title">Queue</h2>
+        <button id="queue-clear" type="button" class="link">Clear finished</button>
+      </div>
+      <ul id="queue" class="queue"></ul>
+    </section>
+
+    <div class="group">
+      <span class="group-label">Output</span>
+      <div class="segmented" role="radiogroup" aria-label="Output">
+        <label><input type="radio" name="mode" value="transcript" checked /><span>Full transcript</span></label>
+        <label><input type="radio" name="mode" value="summary" /><span>Claude summary + tasks</span></label>
+      </div>
+      <p id="mode-hint" class="hint">The complete transcript, split into readable paragraphs.</p>
+      <div id="summary-options" class="summary-options" hidden>
+        <label class="field inline">
+          <span>Template</span>
+          <select id="template"></select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="include-transcript" checked />
+          <span>Add the full transcript under the summary</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="group">
+      <span class="group-label">Send to</span>
+      <div class="checks">
+        <label class="check"><input type="checkbox" id="send-notion" checked /><span>Upload to Notion</span></label>
+        <label class="check"><input type="checkbox" id="save-local" /><span>Save Markdown file</span></label>
+      </div>
+      <p id="folder-row" class="hint" hidden>
+        Saving to <span id="folder-path" class="path"></span>
+        <button id="folder-change" type="button" class="link">Change</button>
+      </p>
+    </div>
+
+    <div id="missing" class="notice" hidden></div>
+
+    <div class="row">
+      <button id="run" class="primary grow" disabled>Start</button>
+      <button id="stop" type="button" hidden>Stop after this one</button>
+    </div>
+
+    <section id="result" hidden>
+      <div class="result-head">
+        <h2 id="result-title">Markdown</h2>
+        <div class="actions">
+          <button id="copy">Copy</button>
+          <button id="save-md">Save .md</button>
+          <button id="open-notion" class="primary" hidden>Open in Notion</button>
+        </div>
+      </div>
+      <textarea id="preview" readonly spellcheck="false"></textarea>
+    </section>
+  </main>
+
+  <form id="view-settings" class="view" hidden>
+    <fieldset>
+      <legend>Transcription</legend>
+      <label class="field">
+        <span>Engine</span>
+        <select name="transcriber">
+          <option value="openwhispr-local">OpenWhispr (on this Mac, free)</option>
+          <option value="openwhispr-cloud">OpenWhispr Cloud (Pro plan)</option>
+          <option value="openai">OpenAI Whisper API</option>
+        </select>
+      </label>
+
+      <div data-engine="openwhispr-local">
+        <label class="field">
+          <span>Model (optional)</span>
+          <input name="openwhisprModel" type="text" placeholder="Use the model set in OpenWhispr" />
+        </label>
+        <p class="hint">
+          Uses the OpenWhispr app's local model, so audio never leaves this Mac. The app opens
+          OpenWhispr in the background if it isn't running. Pick or download models in
+          OpenWhispr's own settings.
+        </p>
+      </div>
+
+      <div data-engine="openwhispr-cloud" hidden>
+        <label class="field">
+          <span>OpenWhispr API key</span>
+          <input name="openwhisprApiKey" type="password" autocomplete="off" placeholder="owk_live_..." />
+        </label>
+        <p class="hint">
+          Create a key in OpenWhispr under Integrations → API with the transcriptions:write scope.
+          Cloud transcription is in beta: Pro or Business plan, 4 MB per file.
+        </p>
+      </div>
+
+      <div data-engine="openai" hidden>
+        <label class="field">
+          <span>OpenAI API key</span>
+          <input name="openaiApiKey" type="password" autocomplete="off" placeholder="sk-..." />
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <select name="openaiModel">
+            <option value="whisper-1">whisper-1</option>
+            <option value="gpt-4o-transcribe">gpt-4o-transcribe</option>
+            <option value="gpt-4o-mini-transcribe">gpt-4o-mini-transcribe</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Language (optional, e.g. en)</span>
+        <input name="language" type="text" placeholder="Auto-detect" maxlength="5" />
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Claude summaries</legend>
+      <label class="field">
+        <span>Claude API key</span>
+        <input name="anthropicApiKey" type="password" autocomplete="off" placeholder="sk-ant-..." />
+      </label>
+      <label class="field">
+        <span>Model</span>
+        <select name="claudeModel">
+          <option value="claude-opus-5-5">Claude Opus 5.5 (best quality)</option>
+          <option value="claude-sonnet-5-5">Claude Sonnet 5.5 (faster, cheaper)</option>
+        </select>
+      </label>
+      <p class="hint">Only needed for summaries. Get a key at console.anthropic.com.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Notion</legend>
+      <label class="field">
+        <span>Integration token</span>
+        <input name="notionToken" type="password" autocomplete="off" placeholder="ntn_..." />
+      </label>
+      <label class="field">
+        <span>Parent page (URL or ID)</span>
+        <input name="notionParentPageId" type="text" placeholder="https://www.notion.so/My-Transcripts-..." />
+      </label>
+      <p class="hint">
+        Only needed for uploads. Create an integration at notion.so/profile/integrations, then on the
+        parent page open <em>••• → Connections</em> and add it.
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Recorders</legend>
+      <p class="hint">
+        Plug in a voice recorder (or any drive with recordings) and Anvil Notes lists the recordings it
+        hasn't processed yet. Recordings are remembered once processed or marked as done.
+      </p>
+      <p id="ignored-row" class="hint">
+        Ignored drives: <span id="ignored-list">none</span>
+        <button id="unignore" type="button" class="link" hidden>Stop ignoring all</button>
+      </p>
+    </fieldset>
+
+    <div class="row">
+      <button type="submit" class="primary">Save settings</button>
+      <span id="saved" class="saved" hidden>Saved</span>
+    </div>
+  </form>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

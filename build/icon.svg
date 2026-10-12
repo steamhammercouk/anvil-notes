@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Background: dark forge steel with a warm glow rising from below -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2f36"/>
+      <stop offset="1" stop-color="#15171b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.72" r="0.55">
+      <stop offset="0" stop-color="#ff7a1a" stop-opacity="0.38"/>
+      <stop offset="0.6" stop-color="#ff7a1a" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Anvil: brushed steel -->
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f5f7"/>
+      <stop offset="0.12" stop-color="#d9dce1"/>
+      <stop offset="1" stop-color="#8d939c"/>
+    </linearGradient>
+    <!-- Waveform sparks: white-hot to ember -->
+    <linearGradient id="ember" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff5a1f"/>
+      <stop offset="0.55" stop-color="#ff9a2e"/>
+      <stop offset="1" stop-color="#ffe08a"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="tile"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>
+  </defs>
+
+  <!-- macOS icon tile (824px on the 1024 grid) -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  </g>
+  <g clip-path="url(#tile)">
+    <rect x="100" y="100" width="824" height="824" fill="url(#glow)"/>
+    <!-- subtle top highlight -->
+    <rect x="100" y="100" width="824" height="6" fill="#ffffff" opacity="0.08"/>
+  </g>
+
+  <g transform="translate(16,-20)">
+  <!-- Waveform bars rising from the anvil like sparks -->
+  <g filter="url(#bloom)" fill="url(#ember)">
+    <rect x="384" y="430" width="34" height="96"  rx="17"/>
+    <rect x="436" y="352" width="34" height="174" rx="17"/>
+    <rect x="488" y="262" width="34" height="264" rx="17"/>
+    <rect x="540" y="318" width="34" height="208" rx="17"/>
+    <rect x="592" y="388" width="34" height="138" rx="17"/>
+    <rect x="644" y="452" width="34" height="74"  rx="17"/>
+  </g>
+  <!-- stray sparks -->
+  <g fill="#ffc861" filter="url(#bloom)">
+    <circle cx="340" cy="402" r="9"/>
+    <circle cx="724" cy="370" r="8"/>
+    <circle cx="600" cy="252" r="7"/>
+    <circle cx="410" cy="300" r="6"/>
+  </g>
+
+  <!-- Anvil -->
+  <path filter="url(#shadow)" fill="url(#steel)" d="
+    M196,566
+    Q252,556 304,552
+    L774,552 Q796,552 796,574
+    L796,600 Q796,622 774,624
+    L702,628
+    Q646,642 634,690
+    L634,712
+    Q644,738 700,746
+    L714,748 Q734,751 734,771
+    L734,786 Q734,802 716,802
+    L364,802 Q346,802 346,786
+    L346,771 Q346,751 366,748
+    L380,746
+    Q436,738 446,712
+    L446,690
+    Q434,642 378,628
+    L330,624
+    Q258,612 196,566 Z"/>
+  <!-- face highlight -->
+  <path d="M304,552 L774,552 Q796,552 796,574 L796,578 L304,578 Q252,580 214,572 Q252,556 304,552 Z" fill="#ffffff" opacity="0.55"/>
+  </g>
+</svg>
