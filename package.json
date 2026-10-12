@@ -47,7 +47,9 @@
     "files": [
       "src/**",
       "renderer/**",
-      "package.json"
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
     ],
     "dmg": {
       "title": "Anvil Notes"
@@ -55,5 +57,6 @@
     "directories": {
       "output": "dist"
     }
-  }
+  },
+  "author": "Martin Eley"
 }

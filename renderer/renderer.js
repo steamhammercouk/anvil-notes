@@ -135,6 +135,7 @@ function applySettings(s) {
   }
   syncEngineFields();
   $('#folder-path').textContent = shortPath(s.outputFolder || s.defaultOutputFolder);
+  $('#app-version').textContent = s.appVersion ? `version ${s.appVersion}` : '';
   const ignored = s.ignoredVolumes || [];
   $('#ignored-list').textContent = ignored.length ? ignored.join(', ') : 'none';
   $('#unignore').hidden = ignored.length === 0;

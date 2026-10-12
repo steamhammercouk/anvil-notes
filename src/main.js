@@ -81,7 +81,7 @@ function writeMarkdownToFolder(folder, title, markdown, mtimeMs) {
 
 // ---------- Settings, files and links ----------
 
-ipcMain.handle('settings:get', () => ({ ...settings.load(), defaultOutputFolder: defaultOutputFolder() }));
+ipcMain.handle('settings:get', () => ({ ...settings.load(), defaultOutputFolder: defaultOutputFolder(), appVersion: require('../package.json').version }));
 ipcMain.handle('settings:save', (_e, updates) => ({ ...settings.save(updates), defaultOutputFolder: defaultOutputFolder() }));
 ipcMain.handle('templates:list', () => templateOptions());
 

@@ -1,5 +1,7 @@
 # Anvil Notes: Setup Guide
 
+> **Provided without warranty.** Anvil Notes is free, open-source software provided "as is". You're responsible for getting consent from people you record, for checking AI-generated output, and for any costs from third-party services. See the [disclaimer in the README](README.md#disclaimer-provided-without-warranty) and the [MIT License](LICENSE).
+
 This guide takes you from nothing installed to your first MP3 turned into a Notion page, with a summary and tasks written by Claude. Follow the parts in order. Each part ends with a check so you know it worked before moving on.
 
 | Part | What you'll set up | Time | Required? |

@@ -2,6 +2,17 @@
 
 *Turn recordings into summaries and tasks.*
 
+## Disclaimer: provided without warranty
+
+> [!WARNING]
+> **Anvil Notes is provided "as is", without warranty of any kind**, express or implied, including fitness for a particular purpose. Use it entirely at your own risk. The authors are not liable for any loss or damage arising from its use, including lost or corrupted recordings, notes or data. See the [MIT License](LICENSE).
+>
+> - **Not affiliated:** Anvil Notes is an independent project. It is **not affiliated with, endorsed by or sponsored by** OpenWhispr, Anthropic (Claude), Notion, OpenAI, NVIDIA, Apple or Plaud. See [Third-party notices and trademarks](THIRD_PARTY_NOTICES.md).
+> - **AI output can be wrong:** transcripts, summaries and tasks are generated automatically and may contain errors or omissions. Check anything important. Don't rely on it for medical, legal, financial or safety-critical decisions.
+> - **Recording consent is your responsibility:** recording conversations, and storing or processing them (including sending transcripts to third-party services), may require the consent of everyone recorded and may be regulated by data-protection law, such as UK GDPR, where you are. You are responsible for complying.
+> - **Third-party services and costs:** if you choose to use them, Claude, Notion, OpenWhispr Cloud and OpenAI receive your data under their own terms and privacy policies, and may charge you for usage. You are responsible for your accounts, keys and costs.
+> - **Keep backups:** Anvil Notes never deletes recordings from your recorder, but don't treat it as your only copy of anything important.
+
 A Mac app that turns a cheap voice recorder into a Plaud-style AI note-taker, with no subscription. Plug in a recorder (or drop in audio files) and it:
 
 1. Imports new recordings from a plugged-in recorder, or audio files you drop in (MP3, WAV, M4A, FLAC, OGG, WebM), and processes them as a queue.
@@ -85,3 +96,13 @@ In Notion, `- [ ]` lines become to-do checkboxes and `<details>` becomes a toggl
 | `src/audio.js` | Supported audio formats |
 | `src/settings.js` | Settings storage with encrypted secrets |
 | `renderer/` | UI |
+
+## Licence
+
+Anvil Notes is released under the [MIT License](LICENSE). Copyright (c) 2026 Martin Eley.
+
+## Trademarks and third-party software
+
+Claude and Anthropic are trademarks of Anthropic, PBC. Notion is a trademark of Notion Labs, Inc. OpenAI and Whisper are trademarks of OpenAI. NVIDIA and Parakeet are trademarks of NVIDIA Corporation. Apple, Mac and macOS are trademarks of Apple Inc. OpenWhispr, Plaud and other names are trademarks of their respective owners. Anvil Notes is not affiliated with or endorsed by any of them.
+
+Transcription is powered by [OpenWhispr](https://openwhispr.com), and summaries by [Claude](https://www.anthropic.com/claude) from Anthropic. For the open-source packages bundled with the app and their licences, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

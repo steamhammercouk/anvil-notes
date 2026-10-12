@@ -272,3 +272,12 @@ button.link:hover:not(:disabled) { text-decoration: underline; }
 #stop[hidden] { display: none; }
 
 #result[hidden] { display: none; }
+
+/* ---------- About ---------- */
+.about p { margin: 0; }
+.about .warning {
+  background: var(--notice-bg);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
